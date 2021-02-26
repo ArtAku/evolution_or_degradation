@@ -3,11 +3,28 @@ from scipy.interpolate import interp2d
 
 def default_energy_income(t:float, h:float) -> tuple:
     k_t = 5.0
-    _t = abs(t - (temperature_range[1] + temperature_range[0]) / 2.0) 
-    _t = _t / (temperature_range[1] - temperature_range[0]) * 2.0 * k_t
+    m_t = (temperature_range[1] + temperature_range[0]) / 4.0 * 3.0 # best temperature
+    r_t = (temperature_range[1] - temperature_range[0]) # temperature range
+    _t = r_t - abs(t - m_t) 
+    _t = _t / r_t * k_t
     k_h = 5.0
-    _h = abs(h - (hardness_range[1] + hardness_range[0]) / 2.0)
-    _h = _h / (hardness_range[1] - hardness_range[0]) * 2.0 * k_h
+    m_h = (hardness_range[1] + hardness_range[0]) / 2.0 # best hardness
+    r_h = (hardness_range[1] - hardness_range[0]) # hardness range
+    _h = r_h - abs(h - m_h)
+    _h = _h / r_h * k_h
+    return _t + _h
+
+def default_start_energy(t:float, h:float) -> tuple:
+    k_t = 5.0
+    m_t = (temperature_range[1] + temperature_range[0]) / 4.0 # best temperature
+    r_t = (temperature_range[1] - temperature_range[0]) # temperature range
+    _t = r_t - abs(t - m_t) 
+    _t = _t / r_t * k_t
+    k_h = 5.0
+    m_h = (hardness_range[1] + hardness_range[0]) / 4.0 * 3.0 # best hardness
+    r_h = (hardness_range[1] - hardness_range[0]) # hardness range
+    _h = r_h - abs(h - m_h)
+    _h = _h / r_h * k_h
     return _t + _h
 
 class MapBuilder():
@@ -16,10 +33,10 @@ class MapBuilder():
     height: int = 10
 
     biom_centers: list = [
-        BiomCenter(x=0, y=0, r=5, temprature=1, hardness=10),
-        BiomCenter(x=0, y=height - 1, r=5, temprature=30, hardness=90),
-        BiomCenter(x=width - 1, y=0, r=5, temprature=81, hardness=90),
-        BiomCenter(x=width - 1, y=height - 1, r=5, temprature=10, hardness=10),
+        BiomCenter(x=0, y=0, temprature=50, hardness=10),
+        BiomCenter(x=0, y=height - 1, temprature=10, hardness=80),
+        BiomCenter(x=width - 1, y=0, temprature=10, hardness=80),
+        BiomCenter(x=width - 1, y=height - 1, temprature=50, hardness=10),
     ]
 
     def create_simple() -> Map:
@@ -45,7 +62,7 @@ class MapBuilder():
         width = params.get('width') or MapBuilder.width
         height = params.get('height') or MapBuilder.height
 
-        start_energy = params.get('start_energy') or (lambda t, h: 10)
+        start_energy = params.get('start_energy') or default_start_energy
         energy_income = params.get('energy_income') or default_energy_income
         x = [b.x for b in bioms]
         y = [b.y for b in bioms]

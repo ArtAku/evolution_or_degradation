@@ -60,7 +60,11 @@ class BiomCenter():
         self.r = params.get('r') or 1
 
         self.temprature = params.get('temprature') or 20
-        self.hardness = params.get('hardness') or 0.5
+        self.hardness = params.get('hardness') or 20
+        if self.temprature <= temperature_range[0] or self.temprature > temperature_range[1]:
+            raise Exception(f'self.temprature {self.temprature} out of range')
+        if self.hardness <= hardness_range[0] or self.hardness > hardness_range[1]:
+            raise Exception(f'self.hardness {self.hardness} out of range')
 
     def coefficient(self, _x: float, _y: float) -> float:
         x = self.x
