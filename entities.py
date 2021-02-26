@@ -1,3 +1,4 @@
+from math import sqrt
 import random
 
 temperature_range = (0, 100)
@@ -43,3 +44,53 @@ class Plant():
                                               agressivity_range[1])
 
         #  Параметры энергии будем изменять впоследствии, пока забили хер
+
+class BiomCenter():
+  temprature: float
+  hardness: float
+  r: float
+  x: int
+  y: int
+
+  def __init__(self, **params) -> None:
+    self.x = params.get('x') or 0
+    self.y = params.get('y') or 0
+    self.r = params.get('r') or 1
+
+    self.temprature = params.get('temprature') or 20
+    self.hardness = params.get('hardness') or 0.5
+
+  def Coefficient(self, _x: float, _y: float) -> float:
+    x = self.x
+    y = self.y
+    c = (self.r - sqrt((_x - x)**2 + (_y - y)**2)) / self.r
+    return c if c > 0 else 0
+
+class Cell():
+  temprature: float
+  hardness: float
+  current_energy: float
+  energy_income: float
+  x: int
+  y: int
+
+  def __init__(self, x, y, **params) -> None:
+    self.x = x
+    self.y = y
+
+    self.temprature = params.get('temprature') or 20
+    self.hardness = params.get('hardness') or 0.5
+    self.current_energy = params.get('current_energy') or 10
+    self.energy_income = params.get('energy_income') or 1
+
+class Map():
+  cells: list
+
+  def __init__(self, **params) -> None:
+    self.cells = params["cells"]
+
+  def Temperature(self) -> list:
+    return [[c.temprature for c in row] for row in self.cells]
+    
+  def Hardness(self) -> list:
+    return [[c.hardness for c in row] for row in self.cells]
