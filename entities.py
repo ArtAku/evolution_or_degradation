@@ -67,10 +67,11 @@ class BiomCenter():
             raise Exception(f'self.hardness {self.hardness} out of range')
 
     def coefficient(self, _x: float, _y: float) -> float:
-        x = self.x
-        y = self.y
-        c = (self.r - sqrt((_x - x)**2 + (_y - y)**2)) / self.r
+        c = (self.r - sqrt((_x - self.x)**2 + (_y - self.y)**2)) / self.r
         return c if c > 0 else 0
+
+    def __str__(self) -> str:
+        return f'center: ({self.x},{self.y})\nt,h: ({self.temprature},{self.hardness})\n'
 
 
 class Cell():
@@ -108,3 +109,6 @@ class Map():
 
     def energy_income(self) -> list:
         return [[c.energy_income for c in row] for row in self.cells]
+
+    def __str__(self) -> str:
+        return f'{len(self.cells)}x{len(self.cells[0])}'
