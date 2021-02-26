@@ -8,11 +8,12 @@ agressivity_range = (0, 100)
 
 children_range = (1, 8)
 
+
 class Plant():
 
     def __init__(self, init_t: float,
                  init_hardness: float, init_max_energy: float,
-                 init_devour_per_day: float, init_spend_per_day:float,
+                 init_devour_per_day: float, init_spend_per_day: float,
                  init_max_children: int, init_feed_to_sepparate: float,
                  init_energy: float, init_agressivity: float) -> None:
         #  Изменяемые мутациями параметры
@@ -45,52 +46,61 @@ class Plant():
 
         #  Параметры энергии будем изменять впоследствии, пока забили хер
 
+
 class BiomCenter():
-  temprature: float
-  hardness: float
-  r: float
-  x: int
-  y: int
+    temprature: float
+    hardness: float
+    r: float
+    x: int
+    y: int
 
-  def __init__(self, **params) -> None:
-    self.x = params.get('x') or 0
-    self.y = params.get('y') or 0
-    self.r = params.get('r') or 1
+    def __init__(self, **params) -> None:
+        self.x = params.get('x') or 0
+        self.y = params.get('y') or 0
+        self.r = params.get('r') or 1
 
-    self.temprature = params.get('temprature') or 20
-    self.hardness = params.get('hardness') or 0.5
+        self.temprature = params.get('temprature') or 20
+        self.hardness = params.get('hardness') or 0.5
 
-  def Coefficient(self, _x: float, _y: float) -> float:
-    x = self.x
-    y = self.y
-    c = (self.r - sqrt((_x - x)**2 + (_y - y)**2)) / self.r
-    return c if c > 0 else 0
+    def coefficient(self, _x: float, _y: float) -> float:
+        x = self.x
+        y = self.y
+        c = (self.r - sqrt((_x - x)**2 + (_y - y)**2)) / self.r
+        return c if c > 0 else 0
+
 
 class Cell():
-  temprature: float
-  hardness: float
-  current_energy: float
-  energy_income: float
-  x: int
-  y: int
+    temprature: float
+    hardness: float
+    current_energy: float
+    energy_income: float
+    x: int
+    y: int
 
-  def __init__(self, x, y, **params) -> None:
-    self.x = x
-    self.y = y
+    def __init__(self, x, y, **params) -> None:
+        self.x = x
+        self.y = y
 
-    self.temprature = params.get('temprature') or 20
-    self.hardness = params.get('hardness') or 0.5
-    self.current_energy = params.get('current_energy') or 10
-    self.energy_income = params.get('energy_income') or 1
+        self.temprature = params.get('temprature') or 20
+        self.hardness = params.get('hardness') or 0.5
+        self.current_energy = params.get('current_energy') or 10
+        self.energy_income = params.get('energy_income') or 1
+
 
 class Map():
-  cells: list
+    cells: list
 
-  def __init__(self, **params) -> None:
-    self.cells = params["cells"]
+    def __init__(self, **params) -> None:
+        self.cells = params["cells"]
 
-  def Temperature(self) -> list:
-    return [[c.temprature for c in row] for row in self.cells]
-    
-  def Hardness(self) -> list:
-    return [[c.hardness for c in row] for row in self.cells]
+    def temperature(self) -> list:
+        return [[c.temprature for c in row] for row in self.cells]
+
+    def hardness(self) -> list:
+        return [[c.hardness for c in row] for row in self.cells]
+
+    def current_energy(self) -> list:
+        return [[c.current_energy for c in row] for row in self.cells]
+
+    def energy_income(self) -> list:
+        return [[c.energy_income for c in row] for row in self.cells]
