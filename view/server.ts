@@ -33,16 +33,15 @@ export class painter {
     let getAsync = promisify(this.client.get).bind(this.client);
     let tempNumber: number;
     let tempStr: string;
+    
     let cells = new Array();
     for (let i = 0; i < this.height; i++) {
       let raw: number[] = new Array();
-      for (let j = 0; j < this.width; j++) {
-        tempStr = await getAsync(`${i}_${j}_t`).then( function (x:string) {
+        tempStr = await getAsync(`${i}_t`).then( function (x:string) {
           return x;
         });
-        tempNumber = +tempStr;
-        raw.push(tempNumber);
-      }
+        tempStr = tempStr.substr(1,tempStr.length-4);
+        raw = tempStr.split("array([").map(x => +(x.split("]")[0])).slice(1);
       cells.push(raw);
     }
     return cells;

@@ -9,4 +9,4 @@ services:
   redis:
     image: redis
     ports:
-      - "5000:5000"
+      - "6379:6379"

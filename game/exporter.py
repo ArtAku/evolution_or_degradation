@@ -34,11 +34,10 @@ class RedisMapMonitor(MapMonitor):
         self.redis_client.set(f"width", width)
         self.logger.debug(f"Redis export width: {width}")
         for i, cells_raw in enumerate(cells):
-            for j, cell in enumerate(cells_raw):
-                self.redis_client.set(f"{i}_{j}_t", str(cell.temprature))
-                self.redis_client.set(f"{i}_{j}_h", str(cell.hardness))
-                self.redis_client.set(f"{i}_{j}_e", str(cell.current_energy))
-                self.redis_client.set(f"{i}_{j}_i", str(cell.energy_income))
+            self.redis_client.set(f"{i}_t", str([c.temprature for c in cells_raw]))
+            self.redis_client.set(f"{i}_h", str([c.hardness for c in cells_raw]))
+            self.redis_client.set(f"{i}_e", str([c.current_energy for c in cells_raw]))
+            self.redis_client.set(f"{i}_i", str([c.energy_income for c in cells_raw]))
         self.logger.info("Redis export map")
     
     def import_map(self) -> None:
