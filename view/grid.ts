@@ -1,4 +1,11 @@
 const Honeycomb = require('honeycomb-grid')
  
-const Grid = Honeycomb.defineGrid()
-Grid.rectangle({ width: 4, height: 4 })
+
+export class painter {
+  grid: any; 
+  constructor(width: number, height: number) {
+    this.grid = Honeycomb.defineGrid();
+    this.grid.rectangle({ width: width, height: height });
+    console.log("grid painted");
+  }
+}

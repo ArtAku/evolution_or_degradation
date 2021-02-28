@@ -1,8 +1,7 @@
 import redis = require('redis');
-import { isWhileStatement } from 'typescript';
 const { promisify } = require("util");
 
-export class painter {
+export class server {
   width: number = -1;
   height: number = -1;
   client: redis.RedisClient;
@@ -31,7 +30,6 @@ export class painter {
 
   public async get_map() {
     let getAsync = promisify(this.client.get).bind(this.client);
-    let tempNumber: number;
     let tempStr: string;
     
     let cells = new Array();
