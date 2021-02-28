@@ -2,7 +2,6 @@ import matplotlib.pyplot as plt
 from entities import Map
 from matplotlib.pyplot import cm
 
-
 def paint_all(map_input: Map) -> None:
     fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2)
 

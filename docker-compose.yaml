@@ -1,7 +1,7 @@
 version: "3.9"  # optional since v1.27.0
 services:
   web:
-    build: .
+    build: ./view
     ports:
       - "5000:5000"
     links:
@@ -9,6 +9,6 @@ services:
   redis:
     image: redis
   degradation:
-    build: .
+    build: ./game
     environment:
       REDIS_HOST: redis

@@ -1,20 +1,13 @@
-// server.js
-// Для начала установим зависимости.
-const http = require('http');
-const routing = require('./routing');
+import { server } from "server";
 
+const port = process.env.PORT || 5000
 
-let server = new http.Server(function(req, res) {
-  // API сервера будет принимать только POST-запросы и только JSON, так что записываем
-  // всю нашу полученную информацию в переменную jsonString
-  var jsonString = '';
-  res.setHeader('Content-Type', 'application/json');
-  req.on('data', (data) => { // Пришла информация - записали.
-      jsonString += data;
-  });
+function main() {
+  server.listen(port, (err) => {
+    if (err) {
+        return console.log('something bad happened', err)
+    }    console.log(`server is listening on ${port}`)
+  })
+}
 
-  req.on('end', () => {// Информации больше нет - передаём её дальше.
-      routing.define(req, res, jsonString); // Функцию define мы ещё не создали.
-  });
-});
-server.listen(8000, 'localhost');
+main();
