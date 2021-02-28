@@ -1,0 +1,19 @@
+{
+  "name": "evolution_or_degradation_view",
+  "version": "0.0.1",
+  "description": "Visual of evalition_or_degradation",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArtAku/evolution_or_degradation.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ArtAku/evolution_or_degradation/issues"
+  },
+  "homepage": "https://github.com/ArtAku/evolution_or_degradation#readme"
+}
