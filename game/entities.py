@@ -40,7 +40,7 @@ class Plant():
         self.energy_mutation_score = 200
         self.current_energy = init_energy
 
-    def mutation(self, mutation_probability) -> Plant:
+    def mutation(self, mutation_probability):
         # Начальная энергия равна энергии на размножение данного вида
         new_plant = Plant(self.preferred_temperature, self.preferred_hardness,
                           self.max_energy, self.energy_max_devour_per_day,
@@ -113,6 +113,7 @@ class Cell():
     energy_income: float
     center_x: int
     center_y: int
+    plant_list: list
 
     def __init__(self, x, y, **params) -> None:
         self.center_x = x
@@ -122,6 +123,7 @@ class Cell():
         self.hardness = params.get('hardness') or 0.5
         self.current_energy = params.get('current_energy') or 10
         self.energy_income = params.get('energy_income') or 1
+        self.plant_list = []
 
 
 class Map():
