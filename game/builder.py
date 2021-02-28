@@ -67,8 +67,8 @@ def create_complex(**params) -> Map:
 
     start_energy = params.get('start_energy') or default_start_energy
     energy_income = params.get('energy_income') or default_energy_income
-    x = [b.x for b in bioms]
-    y = [b.y for b in bioms]
+    x = [b.center_x for b in bioms]
+    y = [b.center_y for b in bioms]
     temprature = [b.temprature for b in bioms]
     hardness = [b.hardness for b in bioms]
     interp_t = interp2d(x, y, temprature)

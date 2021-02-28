@@ -1,5 +1,8 @@
-from builder import create_random
-from paint import paint_all
+from builder import create_complex
+from exporter import RedisMapMonitor
 
-my_map = create_random(width=20, height=8)
-paint_all(my_map)
+my_map = create_complex(width=20, height=8)
+# paint_all(my_map)
+
+monitor = RedisMapMonitor(my_map)
+monitor.export_map()
