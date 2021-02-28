@@ -1,0 +1,14 @@
+version: "3.9"  # optional since v1.27.0
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    links:
+      - redis
+  redis:
+    image: redis
+  degradation:
+    build: .
+    environment:
+      REDIS_HOST: redis
