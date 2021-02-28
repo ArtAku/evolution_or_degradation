@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node main.js"
+    "lint": "./node_modules/.bin/tslint --init",
+    "start": "tsc && node dist/main.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +19,14 @@
   },
   "homepage": "https://github.com/ArtAku/evolution_or_degradation#readme",
   "dependencies": {
+    "@types/redis": "^2.8.28",
+    "express": "^4.16.4",
     "honeycomb-grid": "^3.1.7",
     "redis": "^3.0.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.11",
+    "tslint": "^5.12.1",
+    "typescript": "^3.3.3"
   }
 }

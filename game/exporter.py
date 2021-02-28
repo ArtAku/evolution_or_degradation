@@ -19,12 +19,15 @@ class RedisMapMonitor(MapMonitor):
 
     def __init__(self, monitoring_map: Map) -> None:
         super().__init__(monitoring_map)
-        self.redis_client = redis.Redis('localhost', port=6379, db=0)
+        self.redis_client = redis.Redis(host=redis_config['REDIS_HOST'], port=redis_config['REDIS_PORT'], db=0)
+        self.logger.info("Redis client establish connection")
         self.redis_client.set("a","b")
         self.logger.info("Redis client establish connection")
 
     def export_map(self) -> None:
         cells:list = self.monitoring_map.cells
+        self.redis_client.set(f"height", len(cells))
+        self.redis_client.set(f"width", len(cells[0]))
         for i, cells_raw in enumerate(cells):
             for j, cell in enumerate(cells_raw):
                 self.redis_client.set(f"{i}_{j}_t", str(cell.temprature))

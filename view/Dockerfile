@@ -5,6 +5,6 @@ WORKDIR /app
 COPY *.json ./
 RUN npm ci
 
-COPY ./*.js .
+COPY ./*.js ./
 
 ENTRYPOINT [ "node", "./main.js" ]
