@@ -5,6 +5,8 @@ WORKDIR /app
 COPY *.json ./
 RUN npm ci
 
-COPY ./*.js ./
+COPY ./*.ts ./
+RUN npm install -g typescript
+RUN tsc -p tsconfig.json
 
 ENTRYPOINT [ "node", "./main.js" ]

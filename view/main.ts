@@ -1,20 +1,31 @@
 import express from 'express';
 import { painter } from './server'
+import dotenv from "dotenv";
+dotenv.config();
 const app = express();
-const port = process.env.PORT || 5000
 const redis_host = process.env.REDIS_HOST || "localhost"
 const redis_port = +(process.env.REDIS_PORT || "6379")
+const port = +(process.env.PORT || 8000)
 
-app.get('/', (req, res) => {
-  res.send('The sedulous hyena ate the antelope!');
+const worker = new painter(redis_port, redis_host);
+
+app.route('/map').get(async (_req, res) => {
+  let cells = await worker.get_map();
+
+  res.status(200).send({
+    cells: cells,
+  });
 });
 
-function main() {
-  let server = new painter(redis_port, redis_host);
-  server.get_params();
-  app.listen( port, () => {
-    return console.log(`server is listening on ${port}`);
-  });
-}
+app.route('/init').get(async (_req, res) => {
+  let params = await worker.init_params();
 
-main();
+  res.status(200).send({
+    width: params["width"],
+    height: params["height"],
+  });
+});
+
+app.listen(port, () => {
+  return console.log(`server is listening on ${port}`);
+});

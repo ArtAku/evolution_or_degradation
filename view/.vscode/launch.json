@@ -8,17 +8,9 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Program",
-      "program": "${workspaceFolder}/view/main.ts",
-      "preLaunchTask": "tsc: build - view/tsconfig.json",
+      "program": "${workspaceFolder}/main.ts",
+      "preLaunchTask": "tsc: build - tsconfig.json",
       "outFiles": ["${workspaceFolder}/*.js"],
-    },
-    {
-      "name": "Main",
-      "type": "python",
-      "request": "launch",
-      "program": "${workspaceFolder}/game/main.py",
-      "cwd": "${workspaceFolder}/game",
-      "console": "integratedTerminal"
     }
   ]
 }

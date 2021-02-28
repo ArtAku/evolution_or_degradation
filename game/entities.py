@@ -94,9 +94,13 @@ class Cell():
 
 class Map():
     cells: list
+    width: int
+    height: int
 
     def __init__(self, **params) -> None:
         self.cells = params["cells"]
+        self.height = len(self.cells)
+        self.width = len(self.cells[0])
 
     def temperature(self) -> list:
         return [[c.temprature for c in row] for row in self.cells]

@@ -4,3 +4,4 @@ venv/**
 *.log
 *.env
 *.js
+*.js.map

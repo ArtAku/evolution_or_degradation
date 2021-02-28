@@ -1,15 +1,15 @@
 version: "3.9"  # optional since v1.27.0
 services:
-  web:
-    build: ./view
-    ports:
-      - "5000:5000"
-    environment:
-      PORT: 5000
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
-    links:
-      - redis
+  # web:
+  #   build: ./view
+  #   ports:
+  #     - "8080:8080"
+  #   environment:
+  #     PORT: 8080
+  #     REDIS_HOST: redis
+  #     REDIS_PORT: 6379
+  #   links:
+  #     - redis
   redis:
     image: redis
   degradation:

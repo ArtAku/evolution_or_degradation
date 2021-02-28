@@ -26,8 +26,13 @@ class RedisMapMonitor(MapMonitor):
 
     def export_map(self) -> None:
         cells:list = self.monitoring_map.cells
-        self.redis_client.set(f"height", len(cells))
-        self.redis_client.set(f"width", len(cells[0]))
+        width = self.monitoring_map.width
+        height = self.monitoring_map.height
+        
+        self.redis_client.set(f"height", height)
+        self.logger.debug(f"Redis export height: {height}")
+        self.redis_client.set(f"width", width)
+        self.logger.debug(f"Redis export width: {width}")
         for i, cells_raw in enumerate(cells):
             for j, cell in enumerate(cells_raw):
                 self.redis_client.set(f"{i}_{j}_t", str(cell.temprature))
@@ -37,7 +42,7 @@ class RedisMapMonitor(MapMonitor):
         self.logger.info("Redis export map")
     
     def import_map(self) -> None:
-        height, width = len(self.monitoring_map.cells), len(self.monitoring_map.cells[0])
+        height, width = self.monitoring_map.height, self.monitoring_map.width
 
         cells = []
         for i in range(height):
