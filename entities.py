@@ -50,14 +50,14 @@ class Plant():
 class BiomCenter():
     temprature: float
     hardness: float
-    r: float
-    x: int
-    y: int
+    center_r: float
+    center_x: int
+    center_y: int
 
     def __init__(self, **params) -> None:
-        self.x = params.get('x') or 0
-        self.y = params.get('y') or 0
-        self.r = params.get('r') or 1
+        self.center_x = params.get('x') or 0
+        self.center_y = params.get('y') or 0
+        self.center_r = params.get('r') or 1
 
         self.temprature = params.get('temprature') or 20
         self.hardness = params.get('hardness') or 20
@@ -67,11 +67,11 @@ class BiomCenter():
             raise Exception(f'self.hardness {self.hardness} out of range')
 
     def coefficient(self, _x: float, _y: float) -> float:
-        c = (self.r - sqrt((_x - self.x)**2 + (_y - self.y)**2)) / self.r
-        return c if c > 0 else 0
+        coefficient = (self.center_r - sqrt((_x - self.center_x)**2 + (_y - self.center_y)**2)) / self.center_r
+        return coefficient if coefficient > 0 else 0
 
     def __str__(self) -> str:
-        return f'center: ({self.x},{self.y})\nt,h: ({self.temprature},{self.hardness})\n'
+        return f'center: ({self.center_x},{self.center_y})\nt,h: ({self.temprature},{self.hardness})\n'
 
 
 class Cell():
@@ -79,12 +79,12 @@ class Cell():
     hardness: float
     current_energy: float
     energy_income: float
-    x: int
-    y: int
+    center_x: int
+    center_y: int
 
     def __init__(self, x, y, **params) -> None:
-        self.x = x
-        self.y = y
+        self.center_x = x
+        self.center_y = y
 
         self.temprature = params.get('temprature') or 20
         self.hardness = params.get('hardness') or 0.5
