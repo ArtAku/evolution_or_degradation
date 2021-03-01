@@ -9,7 +9,18 @@ const redis_port = +(process.env.REDIS_PORT || "6379")
 const port = +(process.env.PORT || 8000)
 
 const worker = new server(redis_port, redis_host);
-const map_painter = new painter(10,4);
+const map_painter = new painter(10, 4, 5);
+
+app.route('/paint').get(async (_req, res) => {
+  let hexs = await map_painter.createSVG();
+
+  res.writeHead(200, {
+    'Content-Type': 'text/html',
+    // 'Content-Length': hexs.length
+  });
+
+  res.end(hexs);
+});
 
 app.route('/map').get(async (_req, res) => {
   let cells = await worker.get_map();
