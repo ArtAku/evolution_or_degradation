@@ -36,26 +36,26 @@ default_width: int = 20
 default_height: int = 10
 
 default_biom_centers: list = [
-    BiomCenter(x=0, y=0, temprature=50, hardness=10),
-    BiomCenter(x=0, y=default_height - 1, temprature=99, hardness=80),
-    BiomCenter(x=default_width - 1, y=0, temprature=10, hardness=80),
-    BiomCenter(x=default_width - 1, y=default_height - 1, temprature=99, hardness=10),
+    BiomCenter(x=0, y=0, temperature=50, hardness=10),
+    BiomCenter(x=0, y=default_height - 1, temperature=99, hardness=80),
+    BiomCenter(x=default_width - 1, y=0, temperature=10, hardness=80),
+    BiomCenter(x=default_width - 1, y=default_height - 1, temperature=99, hardness=10),
 ]
 
 def create_simple() -> Map:
     bioms = default_biom_centers
     x = [b.center_x for b in bioms]
     y = [b.center_y for b in bioms]
-    temprature = [b.temprature for b in bioms]
+    temperature = [b.temperature for b in bioms]
     hardness = [b.hardness for b in bioms]
-    interp_t = interp2d(x, y, temprature)
+    interp_t = interp2d(x, y, temperature)
     interp_h = interp2d(x, y, hardness)
     cells = []
     for i in range(default_height):
         cells.append([])
         for j in range(default_width):
             t, h = interp_t(j, i), interp_h(j, i)
-            cells[i].append(Cell(j, i, temprature=t, hardness=h,
+            cells[i].append(Cell(j, i, temperature=t, hardness=h,
                                     current_energy=10, energy_income=1))
 
     return Map(cells=cells)
@@ -69,16 +69,16 @@ def create_complex(**params) -> Map:
     energy_income = params.get('energy_income') or default_energy_income
     x = [b.center_x for b in bioms]
     y = [b.center_y for b in bioms]
-    temprature = [b.temprature for b in bioms]
+    temperature = [b.temperature for b in bioms]
     hardness = [b.hardness for b in bioms]
-    interp_t = interp2d(x, y, temprature)
+    interp_t = interp2d(x, y, temperature)
     interp_h = interp2d(x, y, hardness)
     cells = []
     for i in range(height):
         cells.append([])
         for j in range(width):
             t, h = interp_t(j, i), interp_h(j, i)
-            cells[i].append(Cell(j, i, temprature=t, hardness=h,
+            cells[i].append(Cell(j, i, temperature=t, hardness=h,
                                     current_energy=start_energy(t, h), energy_income=energy_income(t, h)))
     # cells = cut_bounds(cells)
     return Map(cells=cells)
@@ -94,7 +94,7 @@ def create_random(**params) -> Map:
         BiomCenter(
             x=randint(
                 0, width), y=randint(
-                0, height), temprature=randint(
+                0, height), temperature=randint(
                 temperature_range[0], temperature_range[1]), hardness=randint(
                     hardness_range[0], hardness_range[1])) for n in num_bioms]
 
@@ -103,16 +103,16 @@ def create_random(**params) -> Map:
 
     x = [b.center_x for b in bioms]
     y = [b.center_y for b in bioms]
-    temprature = [b.temprature for b in bioms]
+    temperature = [b.temperature for b in bioms]
     hardness = [b.hardness for b in bioms]
-    interp_t = interp2d(x, y, temprature)
+    interp_t = interp2d(x, y, temperature)
     interp_h = interp2d(x, y, hardness)
     cells = []
     for i in range(height):
         cells.append([])
         for j in range(width):
             t, h = interp_t(j, i)[0], interp_h(j, i)[0]
-            cells[i].append(Cell(j, i, temprature=t, hardness=h,
+            cells[i].append(Cell(j, i, temperature=t, hardness=h,
                                     current_energy=start_energy(t, h), energy_income=energy_income(t, h)))
     cells = cut_bounds(cells)
     return Map(cells=cells)
@@ -122,11 +122,11 @@ def cut_bounds(cells: list) -> Map:
         row_cells:list = cells[i]
         for j in range(len(row_cells)):
             cell: Cell = row_cells[j]
-            t, h = cell.temprature, cell.hardness
+            t, h = cell.temperature, cell.hardness
             if t < temperature_range[0]:
-                cell.temprature = temperature_range[0]
+                cell.temperature = temperature_range[0]
             if t > temperature_range[1]:
-                cell.temprature = temperature_range[1]
+                cell.temperature = temperature_range[1]
             if h < hardness_range[0]:
                 cell.hardness = hardness_range[0]
             if h > hardness_range[1]:

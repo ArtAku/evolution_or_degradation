@@ -1,0 +1,14 @@
+version: "3.9"  # optional since v1.27.0
+services:
+  degradation:
+    build: ./game
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+
+      CONSOLE_LOG_LEVEL: DEBUG
+      FILE_LOG_LEVEL: DEBUG
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
