@@ -1,0 +1,38 @@
+{
+  "name": "evolution_or_degradation_view",
+  "version": "0.0.1",
+  "description": "Visual of evalition_or_degradation",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "./node_modules/.bin/tslint --init",
+    "start": "tsc && node main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArtAku/evolution_or_degradation.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ArtAku/evolution_or_degradation/issues"
+  },
+  "homepage": "https://github.com/ArtAku/evolution_or_degradation#readme",
+  "dependencies": {
+    "@svgdotjs/svg.js": "^3.0.16",
+    "@types/express": "^4.17.11",
+    "@types/redis": "^2.8.28",
+    "dotenv": "^8.2.0",
+    "express": "^4.16.4",
+    "honeycomb-grid": "^3.1.7",
+    "jsdom": "^16.4.0",
+    "pixi.js": "^5.3.8",
+    "redis": "^3.0.2",
+    "typescript": "^3.3.3"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.11",
+    "tslint": "^5.12.1",
+    "typescript": "^3.3.3"
+  }
+}

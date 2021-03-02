@@ -48,7 +48,7 @@ class Plant():
 
 
 class BiomCenter():
-    temprature: float
+    temperature: float
     hardness: float
     center_r: float
     center_x: int
@@ -59,23 +59,25 @@ class BiomCenter():
         self.center_y = params.get('y') or 0
         self.center_r = params.get('r') or 1
 
-        self.temprature = params.get('temprature') or 20
+        self.temperature = params.get('temperature') or 20
         self.hardness = params.get('hardness') or 20
-        if self.temprature <= temperature_range[0] or self.temprature > temperature_range[1]:
-            raise Exception(f'self.temprature {self.temprature} out of range')
+        if self.temperature <= temperature_range[0] or self.temperature > temperature_range[1]:
+            raise Exception(
+                f'self.temperature {self.temperature} out of range')
         if self.hardness <= hardness_range[0] or self.hardness > hardness_range[1]:
             raise Exception(f'self.hardness {self.hardness} out of range')
 
     def coefficient(self, _x: float, _y: float) -> float:
-        coefficient = (self.center_r - sqrt((_x - self.center_x)**2 + (_y - self.center_y)**2)) / self.center_r
+        coefficient = (self.center_r - sqrt((_x - self.center_x)
+                                            ** 2 + (_y - self.center_y)**2)) / self.center_r
         return coefficient if coefficient > 0 else 0
 
     def __str__(self) -> str:
-        return f'center: ({self.center_x},{self.center_y})\nt,h: ({self.temprature},{self.hardness})\n'
+        return f'center: ({self.center_x},{self.center_y})\nt,h: ({self.temperature},{self.hardness})\n'
 
 
 class Cell():
-    temprature: float
+    temperature: float
     hardness: float
     current_energy: float
     energy_income: float
@@ -86,7 +88,7 @@ class Cell():
         self.center_x = x
         self.center_y = y
 
-        self.temprature = params.get('temprature') or 20
+        self.temperature = params.get('temperature') or 20
         self.hardness = params.get('hardness') or 0.5
         self.current_energy = params.get('current_energy') or 10
         self.energy_income = params.get('energy_income') or 1
@@ -94,12 +96,16 @@ class Cell():
 
 class Map():
     cells: list
+    width: int
+    height: int
 
     def __init__(self, **params) -> None:
         self.cells = params["cells"]
+        self.height = len(self.cells)
+        self.width = len(self.cells[0])
 
     def temperature(self) -> list:
-        return [[c.temprature for c in row] for row in self.cells]
+        return [[c.temperature for c in row] for row in self.cells]
 
     def hardness(self) -> list:
         return [[c.hardness for c in row] for row in self.cells]

@@ -1,0 +1,5 @@
+matplotlib
+scipy
+pylint
+redis
+environs
