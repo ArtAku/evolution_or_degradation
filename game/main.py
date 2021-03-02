@@ -9,4 +9,4 @@ monitor = RedisMapMonitor(my_map)
 monitor.export_map()
 
 while True:
-  sleep(1000)
+    sleep(1000)

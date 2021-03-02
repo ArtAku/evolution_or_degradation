@@ -32,6 +32,7 @@ def default_start_energy(t: float, h: float) -> tuple:
     _h = _h / r_h * k_h
     return _t + _h
 
+
 default_width: int = 20
 default_height: int = 10
 
@@ -39,8 +40,13 @@ default_biom_centers: list = [
     BiomCenter(x=0, y=0, temperature=50, hardness=10),
     BiomCenter(x=0, y=default_height - 1, temperature=99, hardness=80),
     BiomCenter(x=default_width - 1, y=0, temperature=10, hardness=80),
-    BiomCenter(x=default_width - 1, y=default_height - 1, temperature=99, hardness=10),
+    BiomCenter(
+        x=default_width - 1,
+        y=default_height - 1,
+        temperature=99,
+        hardness=10),
 ]
+
 
 def create_simple() -> Map:
     bioms = default_biom_centers
@@ -56,9 +62,10 @@ def create_simple() -> Map:
         for j in range(default_width):
             t, h = interp_t(j, i), interp_h(j, i)
             cells[i].append(Cell(j, i, temperature=t, hardness=h,
-                                    current_energy=10, energy_income=1))
+                                 current_energy=10, energy_income=1))
 
     return Map(cells=cells)
+
 
 def create_complex(**params) -> Map:
     bioms = params.get('bioms') or default_biom_centers
@@ -79,9 +86,10 @@ def create_complex(**params) -> Map:
         for j in range(width):
             t, h = interp_t(j, i), interp_h(j, i)
             cells[i].append(Cell(j, i, temperature=t, hardness=h,
-                                    current_energy=start_energy(t, h), energy_income=energy_income(t, h)))
+                                 current_energy=start_energy(t, h), energy_income=energy_income(t, h)))
     # cells = cut_bounds(cells)
     return Map(cells=cells)
+
 
 def create_random(**params) -> Map:
     width = params.get('width') or default_width
@@ -113,13 +121,14 @@ def create_random(**params) -> Map:
         for j in range(width):
             t, h = interp_t(j, i)[0], interp_h(j, i)[0]
             cells[i].append(Cell(j, i, temperature=t, hardness=h,
-                                    current_energy=start_energy(t, h), energy_income=energy_income(t, h)))
+                                 current_energy=start_energy(t, h), energy_income=energy_income(t, h)))
     cells = cut_bounds(cells)
     return Map(cells=cells)
 
+
 def cut_bounds(cells: list) -> Map:
     for i in range(len(cells)):
-        row_cells:list = cells[i]
+        row_cells: list = cells[i]
         for j in range(len(row_cells)):
             cell: Cell = row_cells[j]
             t, h = cell.temperature, cell.hardness
