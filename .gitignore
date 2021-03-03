@@ -5,3 +5,5 @@
 *.env
 *.js
 *.js.map
+*.csv
+**/.idea/**
