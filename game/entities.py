@@ -3,11 +3,18 @@ import random
 
 temperature_range = (0, 100)
 hardness_range = (0, 100)
+max_energy_range = (100, 1000)
 energy_range = (0, 100)
 agressivity_range = (0, 100)
 
 children_range = (1, 8)
 
+temperature_max_delta = 10
+hardness_max_delta = 10
+energy_max_delta = 10
+agressivity_max_delta = 10
+
+children_max_delta = 1
 
 class Plant():
 
@@ -15,15 +22,17 @@ class Plant():
                  init_hardness: float, init_max_energy: float,
                  init_devour_per_day: float, init_spend_per_day: float,
                  init_max_children: int, init_feed_to_sepparate: float,
+                 init_sepparate_threshold: float,
                  init_energy: float, init_agressivity: float) -> None:
         #  Изменяемые мутациями параметры
         self.preferred_temperature: float = init_t
-        self.prefered_hardness: float = init_hardness
+        self.preferred_hardness: float = init_hardness
 
         self.max_energy: float = init_max_energy
         self.energy_max_devour_per_day: float = init_devour_per_day
         self.energy_min_spending_per_day: float = init_spend_per_day
         self.max_children: int = init_max_children
+        self.sepparate_threshoud: float = init_sepparate_threshold
         self.feed_to_sepparate: float = init_feed_to_sepparate
         self.agressivity: float = init_agressivity
 
@@ -31,20 +40,41 @@ class Plant():
         self.energy_mutation_score = 200
         self.current_energy = init_energy
 
-    def mutation(self, mutation_probability) -> None:
-        if random.random() <= mutation_probability:
-            self.preferred_temperature = random.uniform(temperature_range[0],
-                                                        temperature_range[1])
+    def mutation(self, mutation_probability) -> Plant:
+        # Начальная энергия равна энергии на размножение данного вида
+        new_plant = Plant(self.preferred_temperature, self.preferred_hardness,
+                          self.max_energy, self.energy_max_devour_per_day,
+                          self.energy_min_spending_per_day, self.max_children,
+                          self.feed_to_sepparate, self.sepparate_threshoud,
+                          self.feed_to_sepparate, self.agressivity)
 
         if random.random() <= mutation_probability:
-            self.prefered_hardness = random.uniform(hardness_range[0],
-                                                    hardness_range[1])
+            pref_temp = self.preferred_temperature + random.uniform(self.preferred_temperature - temperature_max_delta,
+                                                                    self.preferred_temperature + temperature_max_delta)
+            pref_temp = temperature_range[0] if pref_temp < temperature_range[0] else pref_temp
+            pref_temp = temperature_range[1] if pref_temp > temperature_range[1] else pref_temp
+
+            new_plant.preferred_temperature = pref_temp
 
         if random.random() <= mutation_probability:
-            self.agressivity = random.uniform(agressivity_range[0],
-                                              agressivity_range[1])
+            pref_hardness = self.preferred_hardness + random.uniform(self.preferred_hardness - hardness_max_delta,
+                                                                    self.preferred_hardness + hardness_max_delta)
+            pref_hardness = hardness_range[0] if pref_hardness < hardness_range[0] else pref_hardness
+            pref_hardness = hardness_range[1] if pref_hardness > hardness_range[1] else pref_hardness
+
+            new_plant.preferred_hardness = pref_hardness
+
+
+        if random.random() <= mutation_probability:
+            agr = self.preferred_hardness + random.uniform(self.agressivity - agressivity_max_delta,
+                                                                     self.agressivity + agressivity_max_delta)
+            agr = agressivity_range[0] if agr < agressivity_range[0] else agr
+            agr = agressivity_range[1] if agr > agressivity_range[1] else agr
+
+            new_plant.agressivity = agr
 
         #  Параметры энергии будем изменять впоследствии, пока забили хер
+        return new_plant
 
 
 class BiomCenter():
