@@ -1,17 +1,37 @@
 # evolution_or_degradation
 
-# install
+# Install
+
+From repository root
+
+```
+cd game
+```
 
 Python init virtual env
+
 ```powershell
 python -m venv venv
 ```
 
 Python install reqs
+
 ```powershell
-pip install -r requrments.txt
+pip install -r requirements.txt
 ```
+
+## Troubleshooting
+
+**Error**: `ERROR: Could not install packages due to an EnvironmentError: [WinError 2] The system cannot find the file specified: 'c:\\python38\\Scripts\\dotenv.exe' -> 'c:\\python38\\Scripts\\dotenv.exe.deleteme'`
+
+**Fix**: use full path to init virtual env:
+
+```
+"C:\Python38\python.exe" -m venv venv
+```
+
 # Dev
+
 ## Scripts
 
 ```powershell
@@ -21,38 +41,42 @@ autopep8 --in-place --aggressive @(ls -Filter *.py)
 pylint --fail-under=5 @(ls -Filter *.py)
 ```
 
-# start
+# Start
 
 web working on localhost:8080
-to change cell's size open localhost:8080/:size
+To set cell size, send get request `localhost:8080/set/size/{number}`
 
-## run all
+## Run all
 
 ```powershell
 docker-compose up --build
 ```
 
-## debug python
+## Debug python
 
 start supply services
+
 ```powershell
 docker-compose -f docker-compose.web.yaml --build
 ```
 
 Run python
+
 ```powershell
 cd ./game
 python main.py
 ```
 
-## debug web
+## Debug web
 
 start supply services
+
 ```powershell
 docker-compose -f docker-compose.game.yaml --build
 ```
 
 Run web
+
 ```powershell
 cd ./view
 npm start
