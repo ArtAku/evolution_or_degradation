@@ -1,4 +1,4 @@
 {
-  "python.pythonPath": "d:\\Projects\\evolution_or_degradation\\venv\\Scripts\\python.exe",
+  "python.pythonPath": "${workspaceFolder}\\game\\venv\\Scripts\\python.exe",
   "python.analysis.extraPaths": ["game"]
 }
